@@ -20,4 +20,9 @@ public class TestService2 {
     public void e2(Event event) {
         System.out.println("---all event");
     }
+
+    @EventListener
+    public void e3(Event event) {
+        System.out.println("---all event");
+    }
 }
