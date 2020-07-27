@@ -1,13 +1,14 @@
 package com.simpledev;
 
+import com.simpledev.base.event.EventBus;
+import com.simpledev.dev.test.event.PlayerEvent1;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
     public static void main(String ... args) {
-        System.out.println("----start app ... ");
-        System.out.println("----app close ...");
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-        System.out.println("second commit");
+        EventBus.init(context);
+        EventBus.post(new PlayerEvent1());
     }
 }
