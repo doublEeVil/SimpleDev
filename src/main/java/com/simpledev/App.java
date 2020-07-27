@@ -10,5 +10,6 @@ public class App {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         EventBus.init(context);
         EventBus.post(new PlayerEvent1());
+        EventBus.post(new PlayerEvent1());
     }
 }
