@@ -8,5 +8,6 @@ public class App {
         System.out.println("----start app ... ");
         System.out.println("----app close ...");
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        System.out.println("second commit");
     }
 }
