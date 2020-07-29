@@ -18,7 +18,6 @@ public class EventBus {
         String[] all = context.getBeanDefinitionNames();
         Object target;
         for (String s : all) {
-            System.out.println(s);
             if (s.startsWith("org.springframework")) {
                 continue;
             }

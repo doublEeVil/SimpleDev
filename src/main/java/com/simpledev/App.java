@@ -1,7 +1,6 @@
 package com.simpledev;
 
 import com.simpledev.base.event.EventBus;
-import com.simpledev.dev.test.event.PlayerEvent1;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
