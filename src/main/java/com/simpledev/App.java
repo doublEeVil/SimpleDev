@@ -6,10 +6,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
-    public static void main(String ... args) {
+
+    public void start() {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         EventBus.init(context);
-        EventBus.post(new PlayerEvent1());
-        EventBus.post(new PlayerEvent1());
+    }
+
+    public static void main(String ... args) {
+        new App().start();
     }
 }
