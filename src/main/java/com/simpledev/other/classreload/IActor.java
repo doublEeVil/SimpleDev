@@ -1,5 +1,5 @@
 package com.simpledev.other.classreload;
 
-public interface IActiontor {
+public interface IActor {
     String action(String input);
 }
