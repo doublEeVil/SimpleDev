@@ -22,6 +22,8 @@
     </build>
     <modules>
         <module>Spring_Comm</module>
+        <module>SpringBoot_Comm</module>
+        <module>Spring_Netty_HttpServer</module>
     </modules>
 
     <dependencies>
