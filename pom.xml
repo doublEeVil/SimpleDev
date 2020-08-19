@@ -25,6 +25,9 @@
         <module>SpringBoot_Comm</module>
         <module>Spring_Netty_HttpServer</module>
         <module>Kotlin_FX</module>
+        <module>Tools</module>
+        <module>Find_Roads</module>
+        <module>Rpc</module>
     </modules>
 
     <dependencies>

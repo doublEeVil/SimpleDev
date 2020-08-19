@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1000" height="1000" style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <script>
+        var c=document.getElementById("myCanvas");
+        var ctx=c.getContext("2d");
+        ctx.beginPath();
+		ctx.arc(100,75,10,0,2*Math.PI);
+        ctx.stroke();
+		
+		var getCanvasPoint = function(x,y) {
+		            
+		            return {
+		                x: x - c.offsetLeft,
+		                y: y - c.offsetTop
+		            }
+		        }
+		var move = false;
+		
+		c.onmousedown = function (e) {
+			move = true;
+		}
+		
+		c.onmouseup = function (e) {
+			move = false;
+		}
+		
+		c.onmousemove = function (e) {
+			if (!move) return;
+			var point = getCanvasPoint(e.pageX, e.pageY);
+			console.log("...." + point.x + " " + point.y);
+			ctx.beginPath();
+			ctx.arc(point.x,point.y,10,0,2*Math.PI);
+			ctx.stroke();
+		};
+		
+    </script>
+</body>
+</html>
