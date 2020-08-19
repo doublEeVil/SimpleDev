@@ -12,7 +12,7 @@
         var c=document.getElementById("myCanvas");
         var ctx=c.getContext("2d");
         ctx.beginPath();
-		ctx.arc(100,75,10,0,2*Math.PI);
+		ctx.arc(100,75,20,0,2*Math.PI);
         ctx.stroke();
 		
 		var getCanvasPoint = function(x,y) {
@@ -25,21 +25,51 @@
 		var move = false;
 		
 		c.onmousedown = function (e) {
-			move = true;
+			var point = getCanvasPoint(e.pageX, e.pageY);
+			if(ctx.isPointInPath(point.x, point.y)){
+				move = true;
+				ctx.strokeStyle = "#ff4444";
+			}
 		}
 		
 		c.onmouseup = function (e) {
 			move = false;
+			ctx.strokeStyle = "#000000";
 		}
 		
 		c.onmousemove = function (e) {
 			if (!move) return;
+			ctx.clearRect(0, 0,c.width, c.height);
 			var point = getCanvasPoint(e.pageX, e.pageY);
 			console.log("...." + point.x + " " + point.y);
 			ctx.beginPath();
-			ctx.arc(point.x,point.y,10,0,2*Math.PI);
+			ctx.arc(point.x,point.y,20,0,2*Math.PI);
 			ctx.stroke();
 		};
+		
+		////
+		var isConn = false;
+		var conn = new WebSocket('ws://127.0.0.1:8888/ws');
+		conn.onopen = function () {
+		  conn.send('Ping'); // Send the message 'Ping' to the server
+		  isConn = true;
+		};
+		
+		// Log errors
+		conn.onerror = function (error) {
+		  console.log('WebSocket Error ' + error);
+		};
+		
+		// Log messages from the server
+		conn.onmessage = function (e) {
+		  console.log('Server: ' + e.data);
+		};
+		
+		conn.onclose = function() {
+			isConn = false;
+			console.log("lost connect ... ");
+		}
+		
 		
     </script>
 </body>
