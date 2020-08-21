@@ -9,11 +9,17 @@
         Your browser does not support the HTML5 canvas tag.
     </canvas>
     <script>
+		var R = 20;
+		var posX = 100;
+		var posY = 75;
+		
         var c=document.getElementById("myCanvas");
         var ctx=c.getContext("2d");
         ctx.beginPath();
-		ctx.arc(100,75,20,0,2*Math.PI);
+		ctx.arc(posX, posY,R,0,2*Math.PI);
         ctx.stroke();
+		
+		ctx.font = "15px Times New Roman";
 		
 		var getCanvasPoint = function(x,y) {
 		            
@@ -24,9 +30,18 @@
 		        }
 		var move = false;
 		
+		function isInCircle(x, y) {
+			if (myId == 0) return true; 
+			data = all["" + myId + ""];
+			if (x < data[0] - R  || x > data[0] + R) return false;
+			if (y < data[1] - R || y > data[1] + R) return false;
+			return R * R >= Math.abs(x-data[0]) * Math.abs(x-data[0]) + Math.abs(y-data[1]) * Math.abs(y-data[1]);
+		}
+		
 		c.onmousedown = function (e) {
 			var point = getCanvasPoint(e.pageX, e.pageY);
-			if(ctx.isPointInPath(point.x, point.y)){
+			//if(ctx.isPointInPath(point.x, point.y) && isInCircle(point.x, point.y)){
+			if(isInCircle(point.x, point.y)){
 				move = true;
 				ctx.strokeStyle = "#ff4444";
 			}
@@ -42,17 +57,13 @@
 			ctx.clearRect(0, 0,c.width, c.height);
 			var point = getCanvasPoint(e.pageX, e.pageY);
 			// console.log("...." + point.x + " " + point.y);
+			ctx.fillText("我" + myId, point.x - R/4, point.y - R/4);
 			ctx.beginPath();
 			ctx.arc(point.x,point.y,20,0,2*Math.PI);
 			ctx.stroke();
-
-			//
-			var data = new Uint32Array(4);
-			data[0] = 9;
-			data[1] = 99;
-			data[3] = point.x;
-			data[4] = point.y;
-			conn.send(data.buffer);
+			
+			all[myId] = [parseInt(point.x), parseInt(point.y)]
+			sendPos(parseInt(point.x), parseInt(point.y));
 		};
 		
 		////
@@ -61,6 +72,7 @@
 		conn.onopen = function () {
 		  conn.send('Ping'); // Send the message 'Ping' to the server
 		  isConn = true;
+		  sendPos(posX, posY);
 		};
 		
 		// Log errors
@@ -68,10 +80,58 @@
 		  console.log('WebSocket Error ' + error);
 		};
 		
-		// Log messages from the server
+		// 只需要定义一个协议就可以了
+		// [int + byte + int + int]
+		// id + op + posX + posY
+		// op: 0 确认自己的id
+		// op: 1 move
+		// op: 2 destory
+		
 		conn.onmessage = function (e) {
-		  console.log('Server: ' + e.data);
-		};
+		  onMes(e.data);
+		}
+		
+		var reader = new FileReader();
+		
+		function onMes(arr) {
+			if (!(arr instanceof Blob)) {
+				return;
+			}
+			reader.readAsArrayBuffer(arr);
+			reader.onload = function () {
+				var arr = reader.result;
+				arr = new Int8Array(arr);
+				var pid = 0;
+				pid |= ((arr[0] & 0xFF) << 24 );
+				pid |= ((arr[1] & 0xFF) << 16);
+				pid |= ((arr[2] & 0xFF) << 8);
+				pid |= (arr[3] & 0xFF);
+				var op = arr[4];
+				if (op == 1) {
+					// move
+					var x = 0;
+					x |= ((arr[5] & 0xFF) << 24);
+					x |= ((arr[6] & 0xFF) << 16);
+					x |= ((arr[7] & 0xFF) << 8);
+					x |= (arr[8] & 0xFF);
+					var y = 0;
+					y |= ((arr[9] & 0xFF) << 24);
+					y |= ((arr[10] & 0xFF) << 16);
+					y |= ((arr[11] & 0xFF) << 8);
+					y |= (arr[12] & 0xFF);
+					all[""+pid+""] = [x, y];
+				} else if (op == 2) {
+					// distroy
+					delete all["" + pid + ""]
+				} else if (op == 0) {
+					myId = pid;
+					all[""+pid+""] = [100, 75];
+					delete all["0"]
+				}
+
+				drawAll();
+			}
+		}
 		
 		conn.onclose = function() {
 			isConn = false;
@@ -81,6 +141,39 @@
 		function send(data) {
 			if (isConn) conn.send(data);
 		}
+		
+		
+		function sendPos(x, y) {
+			var data = new Int8Array(8);
+			data[0] = (x >> 24) & 0xFF;
+			data[1] = (x >> 16) & 0xFF;
+			data[2] = (x >> 8) & 0xFF;
+			data[3] = (x >> 0) & 0xFF;
+			data[4] = (y >> 24) & 0xFF;
+			data[5] = (y >> 16) & 0xFF;
+			data[6] = (y >> 8) & 0xFF;
+			data[7] = (y >> 0) & 0xFF;
+			send(data.buffer);
+		}
+		
+		var all = {}  // id:[]的格式
+	
+		var myId = 0;
+		
+		function drawAll() {
+			ctx.clearRect(0, 0,c.width, c.height);
+			for (var i in all) {
+				if (i == myId) {
+					ctx.fillText("我" + myId, all[i][0] - R/2 , all[i][1] + R/3);
+				} else {
+					ctx.fillText("" + i, all[i][0] - R/2 , all[i][1] + R/3);
+				}
+				ctx.beginPath();
+				ctx.arc(all[i][0], all[i][1], 20, 0, 2*Math.PI);
+				ctx.stroke()
+			}
+		}
+
 		
     </script>
 </body>

@@ -20,6 +20,7 @@ public class WebSocketServerInitializer  extends ChannelInitializer<SocketChanne
         pipeline.addLast(new WebSocketServerCompressionHandler());
         pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH, null, true));
         pipeline.addLast(new WebSocketIndexPageHandler(WEBSOCKET_PATH));
+        // pipeline.addLast(new ByteBufToWSFrameEncoder());
         pipeline.addLast(new WebSocketFrameHandler());
     }
 }
