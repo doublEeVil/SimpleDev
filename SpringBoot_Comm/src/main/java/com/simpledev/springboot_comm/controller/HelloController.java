@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 
+/**
+ * 使用@RestController 的写法
+ */
 @RestController
 public class HelloController {
 
@@ -62,6 +65,15 @@ public class HelloController {
     @RequestMapping("/info")
     public Info info(@RequestParam("id") int id, @RequestParam("name") String name) {
         return new Info(200, "id:" + id + " name:" + name);
+    }
+
+    /**
+     * 特殊用法
+     * @return
+     */
+    @RequestMapping("/other/{name}")
+    public String otherInfo(@PathVariable String name) {
+        return "path: " + name;
     }
 
     @GetMapping("/null")
