@@ -87,7 +87,6 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
     }
 
     public void onMove(int id, int x, int y) {
-        System.out.println("---send: id:" + id + " x:" + x + " y:" + y);
         ByteBuf buf = Unpooled.directBuffer();
         buf.markWriterIndex();
         buf.writeInt(id);
