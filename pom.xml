@@ -30,6 +30,8 @@
         <module>Rpc</module>
         <module>SpringBoot_JdbcTemplate</module>
         <module>SpringBoot_JPA</module>
+        <module>SpringBoot_JdbcTemplate_druid</module>
+        <module>SpringBoot_Redis</module>
     </modules>
 
     <dependencies>
