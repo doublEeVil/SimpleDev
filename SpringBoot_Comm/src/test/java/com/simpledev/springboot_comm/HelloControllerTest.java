@@ -2,10 +2,13 @@ package com.simpledev.springboot_comm;
 
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -13,9 +16,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@SpringBootTest
-@AutoConfigureMockMvc
+//
+//@SpringBootTest
+//@AutoConfigureMockMvc
+// 可以用下面这个注解代替上面的注解
+@WebMvcTest
+@RunWith(SpringRunner.class)
 public class HelloControllerTest {
     @Autowired
     private MockMvc mvc;

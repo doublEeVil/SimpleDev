@@ -1,6 +1,8 @@
 package com.simpledev.springboot_comm.controller;
 
 import com.simpledev.springboot_comm.config.AppConfig;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +13,13 @@ import javax.servlet.ServletRequest;
  * 使用@RestController 的写法
  */
 @RestController
+@Api("hello测试")
 public class HelloController {
 
     @Autowired
     private ApplicationContext context;
 
+    @ApiOperation(value="使用/hello", notes="")
     @RequestMapping("/hello")
     public String hello() {
         return "hello";

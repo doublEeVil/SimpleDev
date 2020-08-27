@@ -13,8 +13,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/wd")
 public class WorldController {
 
+    /**
+     * 这里的真实地址是/a, 不是 /wd/a
+     * 如果要是/wd/a这样的地址，必须使用 @ResponseBody
+     * @return
+     */
     @RequestMapping("/a")
     public String a() {
+        return "abc";
+    }
+
+    /**
+     * 这里的真实地址是/wd/a1
+     * @return
+     */
+    @RequestMapping("/a1")
+    public @ResponseBody String a1() {
         return "abc";
     }
 

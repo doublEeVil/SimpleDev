@@ -21,6 +21,7 @@ public class DefaultExceptionController {
     @ResponseBody()
     @ExceptionHandler(value = Exception.class)
     public RespErr onNullPointException(HttpServletRequest request,Exception e) {
+        e.printStackTrace();
         return new RespErr(500, "未知异常");
     }
 }

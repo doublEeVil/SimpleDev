@@ -28,6 +28,8 @@
         <module>Tools</module>
         <module>Find_Roads</module>
         <module>Rpc</module>
+        <module>SpringBoot_JdbcTemplate</module>
+        <module>SpringBoot_JPA</module>
     </modules>
 
     <dependencies>
