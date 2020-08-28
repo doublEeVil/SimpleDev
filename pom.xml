@@ -33,6 +33,7 @@
         <module>SpringBoot_JdbcTemplate_druid</module>
         <module>SpringBoot_Redis</module>
         <module>SpringBoot_MyBatis</module>
+        <module>SpringBoot_MyBatis_Xml</module>
     </modules>
 
     <dependencies>
