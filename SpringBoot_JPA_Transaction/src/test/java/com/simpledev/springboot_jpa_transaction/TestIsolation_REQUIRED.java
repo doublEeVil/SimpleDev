@@ -18,6 +18,10 @@ import java.util.List;
  * REQUIRED：如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。
  */
 
+/**
+ * 测试失败，可能和Test的机制有关
+ */
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class TestIsolation_REQUIRED {
