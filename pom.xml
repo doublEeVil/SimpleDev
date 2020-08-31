@@ -35,6 +35,10 @@
         <module>SpringBoot_MyBatis</module>
         <module>SpringBoot_MyBatis_Xml</module>
         <module>SpringBoot_JPA_Transaction</module>
+        <module>SpringBoot_Session</module>
+        <module>SpringBoot_JWT</module>
+        <module>SpringBoot_MongoDB</module>
+        <module>SpringBoot_Ehcache</module>
     </modules>
 
     <dependencies>
