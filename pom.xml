@@ -39,6 +39,8 @@
         <module>SpringBoot_JWT</module>
         <module>SpringBoot_MongoDB</module>
         <module>SpringBoot_Ehcache</module>
+        <module>SpringBoot_Cache</module>
+        <module>SpringBoot_Cache_Ehcache</module>
     </modules>
 
     <dependencies>
