@@ -41,6 +41,7 @@
         <module>SpringBoot_Ehcache</module>
         <module>SpringBoot_Cache</module>
         <module>SpringBoot_Cache_Ehcache</module>
+        <module>Netty_Batch_Request</module>
     </modules>
 
     <dependencies>
