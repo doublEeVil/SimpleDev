@@ -42,6 +42,7 @@
         <module>SpringBoot_Cache</module>
         <module>SpringBoot_Cache_Ehcache</module>
         <module>Netty_Batch_Request</module>
+        <module>SpringBoot_MongoDB_Cache</module>
     </modules>
 
     <dependencies>
