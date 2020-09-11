@@ -1,6 +1,9 @@
 package com.simpledev.springboot_mongodb;
 
+import com.simpledev.springboot_mongodb.dao.LimitUserDao;
 import com.simpledev.springboot_mongodb.dao.UserDao;
+import com.simpledev.springboot_mongodb.entity.CommObj;
+import com.simpledev.springboot_mongodb.entity.LimitUser;
 import com.simpledev.springboot_mongodb.entity.User;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,10 +19,13 @@ public class MongoTest {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private LimitUserDao limitUserDao;
 
     @Before
     public void onClear() {
         userDao.deleteAll();
+        limitUserDao.deleteAll();
     }
 
     @Test
@@ -74,5 +80,23 @@ public class MongoTest {
         userDao.save(user);
         find = userDao.findById(10001);
         Assert.assertEquals("DDD", find.getName());
+    }
+
+    @Test
+    public void testConverter() {
+        LimitUser limitUser = new LimitUser();
+        limitUser.setId(123);
+        limitUser.setAge(23);
+        limitUser.setAddress("beijing");
+        limitUser.setName("bei");
+        CommObj info  = new CommObj();
+        info.setP1("1111");
+        info.setP2("2222");
+        limitUser.setInfo(info);
+
+        limitUserDao.save(limitUser);
+
+        LimitUser find = limitUserDao.find(123);
+        Assert.assertEquals(limitUser.getAddress(), find.getAddress());
     }
 }
