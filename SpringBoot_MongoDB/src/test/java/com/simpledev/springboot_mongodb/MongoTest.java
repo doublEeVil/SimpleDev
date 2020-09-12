@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.concurrent.ConcurrentHashMap;
+
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class MongoTest {
@@ -85,7 +88,7 @@ public class MongoTest {
     @Test
     public void testConverter() {
         LimitUser limitUser = new LimitUser();
-        limitUser.setId(123);
+        limitUser.setId(125);
         limitUser.setAge(23);
         limitUser.setAddress("beijing");
         limitUser.setName("bei");
@@ -93,10 +96,18 @@ public class MongoTest {
         info.setP1("1111");
         info.setP2("2222");
         limitUser.setInfo(info);
+        limitUser.setName2("name2");
+        limitUser.setMap(new ConcurrentHashMap());
 
         limitUserDao.save(limitUser);
 
-        LimitUser find = limitUserDao.find(123);
+        LimitUser find = limitUserDao.find(124);
         Assert.assertEquals(limitUser.getAddress(), find.getAddress());
+    }
+
+    @Test
+    public void test3() {
+        LimitUser find = limitUserDao.find(125);
+        System.out.println(find.getInfo().getP1());
     }
 }

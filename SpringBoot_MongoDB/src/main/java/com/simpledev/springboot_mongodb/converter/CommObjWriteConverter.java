@@ -7,12 +7,14 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
 import org.springframework.stereotype.Component;
 
+@Component
 @WritingConverter
 public class CommObjWriteConverter implements Converter<CommObj, DBObject> {
     @Override
     public DBObject convert(CommObj commObj) {
         DBObject write = new BasicDBObject();
         write.put("pv", commObj.getP1() + "," + commObj.getP2());
+        write.markAsPartialObject();;
         return write;
     }
 }
