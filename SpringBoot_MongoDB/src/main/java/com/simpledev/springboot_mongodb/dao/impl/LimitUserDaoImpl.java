@@ -27,4 +27,9 @@ public class LimitUserDaoImpl implements LimitUserDao {
     public LimitUser find(int id) {
         return mongoTemplate.findById(id, LimitUser.class);
     }
+
+    @Override
+    public void delete(LimitUser id) {
+        mongoTemplate.remove(id);
+    }
 }

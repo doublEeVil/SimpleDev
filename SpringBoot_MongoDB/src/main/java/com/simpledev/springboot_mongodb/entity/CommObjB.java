@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CommObj {
-    private String p1;
-    private String p2;
+public class CommObjB {
+    private String info;
+    private int weight;
 }

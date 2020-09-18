@@ -6,4 +6,5 @@ public interface LimitUserDao {
     void deleteAll();
     void save(LimitUser user);
     LimitUser find(int id);
+    void delete(LimitUser id);
 }

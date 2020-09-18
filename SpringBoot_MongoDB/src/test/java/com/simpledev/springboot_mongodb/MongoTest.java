@@ -2,9 +2,7 @@ package com.simpledev.springboot_mongodb;
 
 import com.simpledev.springboot_mongodb.dao.LimitUserDao;
 import com.simpledev.springboot_mongodb.dao.UserDao;
-import com.simpledev.springboot_mongodb.entity.CommObj;
-import com.simpledev.springboot_mongodb.entity.LimitUser;
-import com.simpledev.springboot_mongodb.entity.User;
+import com.simpledev.springboot_mongodb.entity.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,22 +90,44 @@ public class MongoTest {
         limitUser.setAge(23);
         limitUser.setAddress("beijing");
         limitUser.setName("bei");
-        CommObj info  = new CommObj();
+        CommObjA info  = new CommObjA();
         info.setP1("1111");
         info.setP2("2222");
-        limitUser.setInfo(info);
+        limitUser.setInfoA(info);
+
+        CommObjB infoB = new CommObjB();
+        infoB.setInfo("BBBB");
+        infoB.setWeight(789);
+        limitUser.setInfoB(infoB);
+
         limitUser.setName2("name2");
         limitUser.setMap(new ConcurrentHashMap());
 
         limitUserDao.save(limitUser);
 
-        LimitUser find = limitUserDao.find(124);
+        LimitUser find = limitUserDao.find(125);
         Assert.assertEquals(limitUser.getAddress(), find.getAddress());
     }
 
     @Test
     public void test3() {
         LimitUser find = limitUserDao.find(125);
-        System.out.println(find.getInfo().getP1());
+        System.out.println(find.getInfoA().getP1());
+        System.out.println(find.getInfoB().getWeight());
+    }
+
+    @Test
+    public void test4() {
+        //  测试内嵌map 报错
+        LimitUser find = limitUserDao.find(8812);
+        if (find != null) {
+            limitUserDao.delete(find);
+        }
+        find = new LimitUser();
+        CommObjC c = new CommObjC();
+        c.getMap().put("11", "11");
+        find.setId(8812);
+        find.setInfoC(c);
+        limitUserDao.save(find);
     }
 }
