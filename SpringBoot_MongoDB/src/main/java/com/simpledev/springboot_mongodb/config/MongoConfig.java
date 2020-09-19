@@ -17,6 +17,10 @@ import java.util.List;
 
 @Configuration
 @EnableAutoConfiguration
+
+
+// 需要需要自己指定多个数据源或者自定义数据源，继承extends AbstractMongoConfig 即可
+
 public class MongoConfig {
 
     @Bean
