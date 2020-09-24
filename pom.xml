@@ -44,6 +44,7 @@
         <module>Netty_Batch_Request</module>
         <module>SpringBoot_MongoDB_Cache</module>
         <module>Watching_MicroMeter</module>
+        <module>Cache_Caffeine</module>
     </modules>
 
     <dependencies>

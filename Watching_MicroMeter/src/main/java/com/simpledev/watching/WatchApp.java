@@ -54,7 +54,7 @@ public class WatchApp {
         }).build();
 
         // 1. 通用标记，数据库中的记录都会有下面的标签
-        registry.config().commonTags("app_name", "test_app", "version", "v0.0.1", "ip", "192.168.0.2");
+        registry.config().commonTags("app_name", "test_app", "version", "v0.0.1", "ip", "192.168.0.1");
 
         // 2. 添加进去
         Metrics.addRegistry(registry);
