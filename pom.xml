@@ -45,6 +45,7 @@
         <module>SpringBoot_MongoDB_Cache</module>
         <module>Watching_MicroMeter</module>
         <module>Cache_Caffeine</module>
+        <module>StoneLang</module>
     </modules>
 
     <dependencies>
