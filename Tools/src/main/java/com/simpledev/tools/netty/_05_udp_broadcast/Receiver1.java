@@ -43,7 +43,9 @@ class MsgPOJODecoder extends MessageToMessageDecoder<DatagramPacket> {
         MsgPOJO msgPOJO = new MsgPOJO();
         ByteBuf buf = msg.content();
         msgPOJO.id = buf.readInt();
-        msgPOJO.msg = buf.toString(buf.readerIndex(), buf.readableBytes() + buf.readerIndex(), Charset.defaultCharset());
+        String m = buf.readCharSequence(buf.readableBytes(), Charset.defaultCharset()).toString();
+        msgPOJO.msg = m;
+        //msgPOJO.msg = buf.toString(buf.readerIndex(), buf.readableBytes() + buf.readerIndex(), Charset.defaultCharset());
         out.add(msgPOJO);
     }
 }
