@@ -46,6 +46,7 @@
         <module>Watching_MicroMeter</module>
         <module>Cache_Caffeine</module>
         <module>StoneLang</module>
+        <module>Redis</module>
     </modules>
 
     <dependencies>
