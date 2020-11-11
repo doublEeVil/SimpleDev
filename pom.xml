@@ -47,6 +47,8 @@
         <module>Cache_Caffeine</module>
         <module>StoneLang</module>
         <module>Redis</module>
+        <module>DistributionTransaction</module>
+        <module>MessageQueue</module>
     </modules>
 
     <dependencies>
