@@ -73,6 +73,9 @@ public class QueueApp {
         }
     }
 
+    /**
+     * 采用阻塞的方式
+     */
     private void startConsumer2() {
         Runnable run = () -> {
             Jedis jedis = consumerJdeis.getResource();
