@@ -32,4 +32,14 @@ public interface UserMapper {
     })
     @Select("SELECT name,age FROM User")
     List<User> getAll();
+
+    // 分页方式1 limit a, b本质等于取范围[a+1, b+a+1]
+    @Select("SELECT name,age FROM User limit #{curIndex},#{page}")
+    List<User> getAllByPage(@Param("curIndex")int curIndex, @Param("page")int page);
+
+    // 分页方式2 采用插件
+
+    // 分页方式3 采用bold
+
+    // 分页方式4， 采用流的方式
 }

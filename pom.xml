@@ -47,8 +47,18 @@
         <module>Cache_Caffeine</module>
         <module>StoneLang</module>
         <module>Redis</module>
-        <module>DistributionTransaction</module>
+<!--        <module>DistributionTransaction</module>-->
         <module>MessageQueue</module>
+        <module>SeataDemo1_eureka</module>
+        <module>SeataDemo1_account</module>
+        <module>SeataDemo1_order</module>
+        <module>SeataDemo1_storage</module>
+        <module>SeataDemo1</module>
+        <module>SeataDemo2</module>
+        <module>SeataDemo2_account</module>
+        <module>SeataDemo2_order</module>
+        <module>SeataDemo2_storage</module>
+        <module>SeataDemo2_business</module>
     </modules>
 
     <dependencies>
