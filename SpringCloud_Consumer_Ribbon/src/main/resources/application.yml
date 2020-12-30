@@ -1,0 +1,11 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8880/eureka/
+server:
+  port: 8883
+
+### 下面可以不需要，如果不注册到注册中心的话
+spring:
+  application:
+    name: service-ribbon

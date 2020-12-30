@@ -59,6 +59,13 @@
         <module>SeataDemo2_order</module>
         <module>SeataDemo2_storage</module>
         <module>SeataDemo2_business</module>
+        <module>SpringCloud_discovery</module>
+        <module>SpringCloud_discover_client</module>
+        <module>SpringCloud_discover_client1</module>
+        <module>SpringCloud_Consumer_Ribbon</module>
+        <module>SpringCloud_Consumer_Feign</module>
+        <module>SpringCloud_Consumer_Ribbon_Hystrix</module>
+        <module>SpringCloud_Consumer_Feign_Hystrix</module>
     </modules>
 
     <dependencies>
