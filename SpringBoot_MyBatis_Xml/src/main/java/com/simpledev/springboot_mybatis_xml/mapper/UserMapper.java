@@ -21,4 +21,8 @@ public interface UserMapper {
     void updateAgeByName(@Param("age") int age,@Param("name") String name);
 
     List<User> getAll();
+
+    List<User> findAN();
+
+    void saveMany(List<User> list);
 }

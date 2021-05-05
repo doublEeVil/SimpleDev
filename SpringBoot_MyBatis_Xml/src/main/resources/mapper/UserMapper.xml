@@ -36,4 +36,20 @@
     <select id="getAll" resultMap="userResultMap">
         SELECT name,age FROM User
     </select>
+
+    <select id="findAN" resultMap="userResultMap">
+        SELECT name,age FROM User
+        WHERE age=2
+    </select>
+
+    <insert id="saveMany">
+        insert into User(name,age)
+        values
+        <foreach collection="list" item="user" separator=",">
+            (
+                #{user.name},
+                #{user.age}
+            )
+        </foreach>
+    </insert>
 </mapper>

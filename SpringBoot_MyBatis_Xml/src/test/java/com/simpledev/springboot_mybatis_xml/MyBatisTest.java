@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,13 @@ public class MyBatisTest {
 
     @Before
     public void clear() {
-        userMapper.deleteAll();
+        //userMapper.deleteAll();
+    }
+
+    @Test
+    public void findOne() {
+        User user = userMapper.findByName("1");
+        System.out.println(user);
     }
 
     @Test
@@ -49,5 +56,23 @@ public class MyBatisTest {
 
         List<User> all = userMapper.getAll();
         Assert.assertEquals(3, all.size());
+    }
+
+    @Test
+    public void saveMany() {
+        int size = 10000;
+        int i = 0;
+        int maxSize = 100_0000;
+        List<User> list = new ArrayList<>(size);
+        for (; maxSize >=0; maxSize -= size) {
+            for (i=0;i < size; i++) {
+                User user = new User();
+                user.setName(i+"");
+                user.setAge(i);
+                list.add(user);
+            }
+            userMapper.saveMany(list);
+            list.clear();
+        }
     }
 }

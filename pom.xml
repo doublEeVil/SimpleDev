@@ -66,6 +66,9 @@
         <module>SpringCloud_Consumer_Feign</module>
         <module>SpringCloud_Consumer_Ribbon_Hystrix</module>
         <module>SpringCloud_Consumer_Feign_Hystrix</module>
+        <module>SpringBoot_StartWithTomcat</module>
+        <module>WebAppTest</module>
+        <module>Bill</module>
     </modules>
 
     <dependencies>

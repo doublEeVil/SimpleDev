@@ -9,6 +9,8 @@ import java.io.IOException;
 /**
  * Filter和上面的拦截器很像，不过一个servlet的标准，一个是spring的组件
  * 运行顺序是filter->interceptor
+ *
+ * 感觉效果极差，建议直接继承<pre> OncePerRequestFilter</pre> 类
  */
 @Component
 @WebFilter(filterName = "myFilter",urlPatterns = "/*")

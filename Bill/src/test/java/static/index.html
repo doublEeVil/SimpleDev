@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Bootstrap 模板</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta charset="utf-8">
+      <!-- 引入 Bootstrap -->
+      <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <!-- <script src="https://cdn.bootcss.com/angular.js/1.7.0/angular.min.js"></script>
+      <script src="https://cdn.bootcss.com/angular.js/1.7.0/angular-route.min.js"></script> -->
+      <style>
+          .search_part {
+            
+          }
+
+          .sum_part {
+
+          }
+
+          .detail_part {
+              
+          }
+      </style>
+    </head>
+   <body ng-app='jizhanApp' ng-controller='control'>
+   <div class="container">
+        <div class="search_part">
+            <!--第一部分-->
+            <!-- 开始-至-结束 关键字 搜索input 按钮 -->
+            <input type="date" ng-model='startDate'>
+            <span class="label label-primary">至</span>
+            <input type="date" ng-model='endDate'><br><br>
+            <span class="label label-primary">关键字</span>
+            <input type="text" ng-model='keyword'>
+            <button ng-click='search()' class="btn btn-primary">搜索</button><br>
+        </div>
+        
+        <div class="sum_part">
+            <span class="label label-primary">收入</span> <span ng-model='shouru'>{{shouru}}</span> 
+            <span class="label label-primary">支出</span> <span ng-model='zhichu'>{{zhichu}}</span> 
+            <button class="btn btn-primary btn-lg" ng-click='beforeSave()' data-toggle="modal" data-target="#myModal">新增</button>
+            <button class="btn btn-primary btn-lg" ng-hide='loginBtnFlag' id='btnLogin' data-toggle="modal" data-target="#loginModal">登录</button><br>    
+        </div>
+ 
+        <div class="detail_part">
+            <table class="table">
+                <caption>详细记录</caption>
+                <thead>
+                  <tr>
+                    <th>时间</th>
+                    <th>收支类型</th>
+                    <th>金额</th>
+                    <th>类别</th>
+                    <th>remark</th>
+                    <th>勾选</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in orderList">
+                        <td>{{x.dateTime}}</td>
+                        <td>{{x.rcvType}}</td>
+                        <td>{{x.amt}}</td>
+                        <td>{{x.useType}}</td>
+                        <td>{{x.remark}}</td>
+                        <!-- <td><input type="radio" ng-model='x.click'></td> -->
+                        <td><button ng-click='beforeEdit(x)' data-toggle="modal" data-target="#myModal">编辑</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            {{actionTitle}}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <span class="label label-primary">时间</span>
+                            <input type="datetime-local" ng-model='inputDateTime'/><br>
+                        </p>
+
+                        <p>
+                            <span class="label label-primary">收支类型</span>
+                            <select ng-init="inputRcvType = inputRcvTypeArr[0]" ng-model="inputRcvType" ng-options="x for x in inputRcvTypeArr">
+                            <!-- <select ng-model='inputRcvType'>
+                                <option>支出</option>
+                                <option>收入</option>
+                            </select><br> -->
+                        </p>
+
+                        <p>
+                            <span class="label label-primary">金额</span>
+                            <input type="number" ng-model='inputAmt'/><br>
+                        </p>
+                        
+                        <p>
+                            <span class="label label-primary">使用类型</span>
+                            <select ng-init="inputUseType = inputUseTypeArr[0]" ng-model="inputUseType" ng-options="x for x in inputUseTypeArr">
+                            </select>                            
+                            <!-- <select ng-model='inputUseType'>
+                                <option>餐饮</option>
+                                <option>生活用品</option>
+                                <option>电子产品</option>
+                                <option>水电网费</option>
+                            </select><br> -->
+                        </p>
+                        
+                        <span class="label label-primary">remark</span>
+                        <input type="text" ng-model='inputRemark'/><br>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="button" ng-click='saveOrUpdate()' class="btn btn-primary" data-dismiss="modal">
+                            {{btnName}}
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+        <!-- 模态框（Modal）-登录 -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            请登录
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <span class="label label-primary">用户</span>
+                        <input type="text" ng-model='inputUser'/><br>
+                        <span class="label label-primary">密码</span>
+                        <input type="password" ng-model='inputPwd'/><br>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button ng-click='login()' type="button" class="btn btn-primary" data-dismiss="modal">
+                            登录
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+        <script>
+            var app = angular.module('jizhanApp', []);
+            app.controller('control', function($scope, $http) {
+                var host = 'http://127.0.0.1:8888';
+
+                // -----
+                var key = 'authorization';
+                var token = window.localStorage.getItem(key);
+                if (token != null) {
+                    setCookie(key, token);
+                }
+                /// ------
+                var startDate = new Date();
+                startDate.setDate(1);
+                $scope.startDate = startDate;
+                $scope.endDate = new Date();
+                //$scope.keyword = '请输入关键字';
+                $scope.shouru=1234;
+                $scope.zhichu=1234;
+                $scope.inputDateTime = new Date();
+
+                $scope.inputRcvTypeArr = ['支出','收入'];
+                $scope.inputUseTypeArr = ['餐饮','生活用品','电子产品','水电网费','房租','衣裤鞋','出行','理发养生']
+
+                $scope.btnName = '';
+
+                $scope.loginBtnFlag = false;
+                
+                $scope.orderList = [
+                    {
+                        datetime: '2020-12-23 12:23:34',
+                        rcvType: '支出',
+                        amt: '2.33',
+                        useType: '伙食',
+                        remark: '3444',
+                        click: false
+                    },{
+                        datetime: '2020-12-25 12:23:34',
+                        rcvType: '支出',
+                        amt: '4.33',
+                        useType: '伙食',
+                        remark: '3444',
+                        click: false
+                    },
+                ];
+
+                $scope.httpAction = function(url, params, callback) {
+                    url = host + url;
+                    $http({
+                        method:'GET',
+                        'url': url,
+                        'params': params,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'authorization': window.localStorage.getItem(key)
+                        }, // 必须增加这句,跨域
+                        withCredentials :true // 携带cookie
+                    }).then(function(data) {
+                        $scope.loginBtnFlag = true;
+                        callback(data.data);
+                    }, function(err) {
+                        if (err.status == 401) {
+                            $scope.loginBtnFlag = false;
+                            alert("请登录");
+                        } else {
+                            console.log(err);
+                            alert("服务器内部错误");
+                        }
+                    });
+                }
+
+                $scope.search = function() {
+                    $scope.httpAction('/bill/query',{
+                        startDate: $scope.startDate,
+                        endDate: $scope.endDate,
+                        keyword: $scope.keyword
+                    }, function(data) {
+                        $scope.shouru = data.rcvSum;
+                        $scope.zhichu = data.useSum;
+                        $scope.orderList = data.billList; 
+                    });
+                }
+
+                $scope.search();
+
+                $scope.beforeSave = function() {
+                    $scope.actionTitle = "增加记录";
+                    $scope.btnName = '增加';
+                    $scope.inputDateTime = new Date();
+                    $scope.inputRcvType = $scope.inputRcvTypeArr[0];
+                    $scope.inputAmt = 0;
+                    $scope.inputUseType = $scope.inputUseTypeArr[0];
+                    $scope.inputRemark = '';
+                }
+
+                $scope.saveOrUpdate = function() {
+                    $scope.httpAction('/bill/save', {
+                        id: $scope.editId,
+                        dateTime: $scope.inputDateTime,
+                        rcvType:$scope.inputRcvType,
+                        amt:$scope.inputAmt,
+                        useType:$scope.inputUseType,
+                        remark:$scope.inputRemark
+                    }, function(data) {
+                        $scope.search();
+                    });
+                    $scope.editId = null;
+                }
+
+                $scope.beforeEdit = function(x) {
+                    $scope.actionTitle = "修改记录";
+                    $scope.btnName = '修改';
+                    $scope.inputDateTime = new Date(x.dateTime);
+                    $scope.inputRcvType = x.rcvType;
+                    $scope.inputAmt = x.amt;
+                    $scope.inputUseType = x.useType;
+                    $scope.inputRemark = x.remark;
+                    $scope.editId = x.id;
+                }
+                
+                $scope.login = function() {
+                    $scope.httpAction('/login', {
+                        user: $scope.inputUser,
+                        pwd: $scope.inputPwd
+                    }, function(data) {
+                        setCookie("authorization", data);
+                        $scope.search();
+                    });
+                }
+
+                //下面两种方法效果是一样的
+                // document.getElementById("btnLogin").onclick();
+                //document.getElementById("btnLogin").click();
+            });
+
+            function getCookie(name) { 
+                var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+                if(arr=document.cookie.match(reg))
+                    return unescape(arr[2]); 
+                else 
+                    return null; 
+            } 
+
+
+            function setCookie(key,value,t){
+                var oDate=new Date();
+                oDate.setDate(oDate.getDate()+t);
+                document.cookie=key+"="+value+"; expires="+oDate.toDateString();
+                window.localStorage.setItem(key, value);
+            }
+
+        </script>
+    </div>
+    </body>
+</html>
