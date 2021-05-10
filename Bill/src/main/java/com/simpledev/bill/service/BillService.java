@@ -9,24 +9,33 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BillService {
     @Autowired
     private BillRepository billRepository;
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter dayStartFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter dayEndFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 23:59:59");
 
     public List<Bill> query(LocalDate startDate, LocalDate endDate, String keyword) {
-        List<Bill> billList = billRepository.findAll();
+//        List<Bill> billList = billRepository.findAll();
 //        return billList.stream().filter(x -> test(x, startDate, endDate, keyword)).sorted((b1,b2) -> b1.getDateTime().isAfter(b2.getDateTime()) ? -1 : 1)
 //                .collect(Collectors.toList());
 //        if (StringUtils.isEmpty(keyword)) {
 //            return billRepository.findBill(startDate, endDate);
 //        }
 //        return null;
-         return billRepository.findBill(startDate.format(formatter), endDate.format(formatter), keyword);
+        Map<String, Object> params = new HashMap<>();
+        params.put("startDate", startDate.format(dayStartFormatter));
+        params.put("endDate", endDate.format(dayEndFormatter));
+        params.put("keyword", keyword);
+
+        //return billRepository.findBill(startDate.format(formatter), endDate.format(formatter), keyword);
+        return billRepository.findBill(params);
     }
 
     private static boolean test(Bill x, LocalDate startDate, LocalDate endDate, String keyword) {
@@ -54,7 +63,8 @@ public class BillService {
         bill.setAmt(amt);
         bill.setUseType(useType);
         bill.setRemark(remark);
-        return billRepository.save(bill);
+        billRepository.save(bill);
+        return bill;
     }
 
     public Bill update(LocalDateTime dateTime, String rcvType, double amt, String useType, String remark, long id) {
@@ -67,6 +77,7 @@ public class BillService {
         bill.setAmt(amt);
         bill.setUseType(useType);
         bill.setRemark(remark);
-        return billRepository.save(bill);
+        billRepository.update(bill);
+        return bill;
     }
 }

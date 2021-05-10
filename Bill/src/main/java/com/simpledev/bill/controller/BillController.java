@@ -35,7 +35,7 @@ public class BillController {
         if (matcher.find()) {
             startDateStr = matcher.group(1);
         }
-        matcher = pattern1.matcher(endDateStr);
+        matcher = pattern2.matcher(endDateStr);
         if (matcher.find()) {
             endDateStr = matcher.group(1);
         }

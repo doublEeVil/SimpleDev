@@ -27,7 +27,7 @@ SET NAMES utf8mb4;
 DROP TABLE IF EXISTS `bill`;
 
 CREATE TABLE `bill` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT ,
   `amt` double DEFAULT NULL,
   `create_at` datetime(6) DEFAULT NULL,
   `date_time` datetime(6) DEFAULT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `bill` (
   `update_at` datetime(6) DEFAULT NULL,
   `use_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 
 
