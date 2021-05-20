@@ -162,13 +162,13 @@
         <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
         <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
         <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+        <script src="https://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
         <script>
             var app = angular.module('jizhanApp', []);
             app.controller('control', function($scope, $http) {
-                var host = 'http://127.0.0.1:8888';
+                var host = window.location.host;
+                host = ""; // 使用默认当前域名
 
-                // -----
                 var key = 'authorization';
                 var token = window.localStorage.getItem(key);
                 if (token != null) {
@@ -185,7 +185,7 @@
                 $scope.inputDateTime = new Date();
 
                 $scope.inputRcvTypeArr = ['支出','收入'];
-                $scope.inputUseTypeArr = ['餐饮','生活用品','电子产品','水电网费','房租','衣裤鞋','出行','理发养生','医疗']
+                $scope.inputUseTypeArr = ['餐饮','生活用品','电子产品','水电网费','房租','衣裤鞋','出行','理发养生','医疗', '工资']
 
                 $scope.btnName = '';
 
@@ -210,7 +210,9 @@
                 ];
 
                 $scope.httpAction = function(url, params, callback) {
+                    console.log("111:" , url)
                     url = host + url;
+                    console.log("222:" , host)
                     $http({
                         method:'GET',
                         'url': url,
