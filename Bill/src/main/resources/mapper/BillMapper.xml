@@ -50,6 +50,7 @@
             and date_time > #{startDate}
             and date_time &lt; #{endDate}
             <if test="keyword != null and keyword != ''"> and (locate(#{keyword}, use_type) or locate(#{keyword}, remark))</if>
+            order by create_at desc
     </select>
 
     <select id="getOne" resultType="com.simpledev.bill.entity.Bill">

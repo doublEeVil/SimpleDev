@@ -21,7 +21,7 @@ public class _07_IO {
         // 主要包括下面几个Files, MoreFiles, Resources, ByteSource, CharSource
 
         // 1. 一行一行读取文件
-        String path = "D:\\_Data\\SimpleDev\\Tools\\src\\main\\java\\com\\simpledev\\tools\\guava\\_07_IO.java";
+        String path = "D:\\_Data\\SimpleDev\\Tools\\src\\main\\java\\com\\com.simpledev\\tools\\guava\\_07_IO.java";
         Files.asCharSource(new File(path), Charset.defaultCharset())
                 .readLines()
                 .forEach(System.out::println);

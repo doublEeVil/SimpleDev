@@ -43,7 +43,7 @@ public class JavaParserSample {
      * @throws IOException
      */
     public void start() throws IOException {
-        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\simpledev\\tools\\javaparser\\JavaParserSample.java";
+        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\com.simpledev\\tools\\javaparser\\JavaParserSample.java";
         CompilationUnit root = StaticJavaParser.parse(new File(path));
         MethodNamePrinter mp = new MethodNamePrinter();
         mp.visit(root, null);
@@ -54,7 +54,7 @@ public class JavaParserSample {
      * @throws IOException
      */
     public void test2() throws IOException {
-        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\simpledev\\tools\\javaparser\\JavaParserSample.java";
+        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\com.simpledev\\tools\\javaparser\\JavaParserSample.java";
         CompilationUnit root = StaticJavaParser.parse(new File(path));
         List<String> names = new ArrayList<>();
         MethodNameCollector collector = new MethodNameCollector();
@@ -77,7 +77,7 @@ public class JavaParserSample {
      * @throws IOException
      */
     public void test3() throws IOException {
-        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\simpledev\\tools\\javaparser\\JavaParserSample.java";
+        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\com.simpledev\\tools\\javaparser\\JavaParserSample.java";
         CompilationUnit root = StaticJavaParser.parse(new File(path));
         IntegerModifier modifier = new IntegerModifier();
         modifier.visit(root, null);
@@ -90,7 +90,7 @@ public class JavaParserSample {
      * @throws IOException
      */
     public void test4() throws IOException {
-        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\simpledev\\tools\\javaparser\\JavaParserSample.java";
+        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\com.simpledev\\tools\\javaparser\\JavaParserSample.java";
         CompilationUnit root = StaticJavaParser.parse(new File(path));
         root.getAllComments().forEach(comment -> {
             System.out.println(comment.getContent());
@@ -102,7 +102,7 @@ public class JavaParserSample {
      * @throws IOException
      */
     public void test5() throws IOException {
-        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\simpledev\\tools\\javaparser\\JavaParserSample.java";
+        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\com.simpledev\\tools\\javaparser\\JavaParserSample.java";
         CompilationUnit root = StaticJavaParser.parse(new File(path));
         CommentVisitor visitor = new CommentVisitor();
         visitor.visit(root, null);
@@ -141,7 +141,7 @@ public class JavaParserSample {
      * @throws IOException
      */
     public void test8() throws IOException {
-        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\simpledev\\tools\\javaparser\\JavaParserSample.java";
+        String path = "C:\\Users\\admin\\IdeaProjects\\SimpleDev_2\\Tools\\src\\main\\java\\com\\com.simpledev\\tools\\javaparser\\JavaParserSample.java";
         CompilationUnit root = StaticJavaParser.parse(new File(path));
 
         TypeSolver typeSolver = new CombinedTypeSolver();

@@ -107,7 +107,7 @@
 <!--                <executions>-->
 <!--                    <execution>-->
 <!--                        <configuration>-->
-<!--                            <mainClass>com.simpledev.com.simpledev.bill.BillApplication</mainClass>-->
+<!--                            <mainClass>com.simpledev.bill.BillApplication</mainClass>-->
 <!--                        </configuration>-->
 <!--                        <goals>-->
 <!--                            <goal>repackage</goal>-->
