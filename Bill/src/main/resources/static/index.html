@@ -243,8 +243,8 @@
                         endDate: $scope.endDate,
                         keyword: $scope.keyword
                     }, function(data) {
-                        $scope.shouru = data.rcvSum;
-                        $scope.zhichu = data.useSum;
+                        $scope.shouru = data.rcvSum.toFixed(2); //保留两位小数
+                        $scope.zhichu = data.useSum.toFixed(2);
                         $scope.orderList = data.billList; 
                     });
                 }
