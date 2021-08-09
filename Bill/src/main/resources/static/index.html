@@ -38,7 +38,8 @@
         <div class="sum_part">
             <span class="label label-primary">收入</span> <span ng-model='shouru'>{{shouru}}</span> 
             <span class="label label-primary">支出</span> <span ng-model='zhichu'>{{zhichu}}</span>
-            <span class="label label-primary">盈余</span> <span ng-bind='shouru-zhichu'></span>
+            <span class="label label-primary">盈余</span> <span ng-model='yingyu'>{{yingyu}}</span>
+<!--            <span class="label label-primary">盈余</span> <span ng-bind='shouru-zhichu'></span>-->
             <button class="btn btn-primary btn-lg" ng-click='beforeSave()' data-toggle="modal" data-target="#myModal">新增</button>
             <button class="btn btn-primary btn-lg" ng-hide='loginBtnFlag' id='btnLogin' data-toggle="modal" data-target="#loginModal">登录</button><br>    
         </div>
@@ -183,6 +184,7 @@
                 //$scope.keyword = '请输入关键字';
                 $scope.shouru=1234;
                 $scope.zhichu=1234;
+                $scope.zhichu=0;
                 $scope.inputDateTime = new Date();
 
                 $scope.inputRcvTypeArr = ['支出','收入'];
@@ -245,6 +247,7 @@
                     }, function(data) {
                         $scope.shouru = data.rcvSum.toFixed(2); //保留两位小数
                         $scope.zhichu = data.useSum.toFixed(2);
+                        $scope.yingyu = ($scope.shouru-$scope.zhichu).toFixed(2);
                         $scope.orderList = data.billList; 
                     });
                 }
