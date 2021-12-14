@@ -59,6 +59,8 @@
         <module>Bill</module>
         <module>DBCache</module>
         <module>Blog_V1</module>
+        <module>GraalVM</module>
+        <module>JavaFX</module>
     </modules>
 
     <dependencies>

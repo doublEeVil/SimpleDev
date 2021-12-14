@@ -13,7 +13,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * 需要下载驱动：谷歌  chromedriver.exe
  *            火狐  geckodriver.exe
  */
-public class WebUIOP {
+public class WebUIOP_DB {
 
     static {
         System.setProperty("webdriver.chrome.driver", "c://driver//chromedriver.exe");
@@ -32,7 +36,7 @@ public class WebUIOP {
     static final WebDriver webDriver = new ChromeDriver();
 
     public static void main(String ... args) throws Exception {
-        new WebUIOP().webPageCheck();
+        new WebUIOP_DB().webPageCheck();
     }
 
 
@@ -48,55 +52,46 @@ public class WebUIOP {
         webDriver.manage().timeouts().implicitlyWait(10,
                 TimeUnit.SECONDS);
 
-        String rootPath = "C:\\Users\\Lenovo\\Desktop\\44";
-        File rootDir = new File(rootPath);
-        File[] files = rootDir.listFiles();
-        for (File file : files) {
-            if (file.isHidden()) {
-                continue;
-            }
-            if (file.isDirectory()) continue;
-            // if (!file.getName().startsWith("A")) continue;
-            action(file);
-            //break;
-        }
+        action();
+
         Thread.sleep(1000);
     }
 
-    public  void action(File file) throws Exception {
+    public  void action() throws Exception {
+        Class.forName("com.mysql.jdbc.Driver");
+        String host = "127.0.0.1:3306";
+        String db = "zhengwu";
+        String user = "root";
+        String pwd = "123456";
+        Connection conn1 = DriverManager.getConnection("jdbc:mysql://" + host + "/" + db + "?useUnicode=true&characterEncoding=utf8", user, pwd);
+        PreparedStatement pstmt;
+        // pstmt = conn1.prepareStatement("select `id`,`错敏字`,`所在地址` from xinmeiti_cuozi where `处理情况` is null or  `处理情况` = '未处理'");
+        pstmt = conn1.prepareStatement("select `id`,`错敏字`,`所在地址` from xinmeiti_cuozi where `处理情况` is null ");
+        ResultSet rs = pstmt.executeQuery();
+        List<String[]> list = new ArrayList<>();
+        while (rs.next()) {
+            String[] data = new String[] {rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3)};
+            list.add(data);
+        }
 
-        ZipSecureFile.setMinInflateRatio(0);
-        Workbook wb = WorkbookFactory.create(file);
-        int sheetCnt = wb.getNumberOfSheets();
-        for (int i = 0; i < sheetCnt; i++) {
-            Sheet sheet = wb.getSheetAt(i);
-            //String sheetName = sheet.getSheetName();
-            //System.out.printf("sheetName: %s\n", sheet);
-            int rowCnt = 0;
-            for (Row row : sheet) {
-                rowCnt++;
-                if (rowCnt == 1) {
-                    continue;
-                }
-                if (row.getCell(11) == null) {
-                    row.createCell(11);
-                }
-                if (row.getCell(11).equals("已处理")) {
-                    continue;
-                }
-                String keyword = row.getCell(0).toString();
-                String url = row.getCell(4).toString();
-                System.out.println(rowCnt + "     " + keyword + "   " + url);
-                try {
-                    String  result = check(keyword, url);
-                    row.getCell(11).setCellValue(result);
-                } catch (Exception e) {
-                    row.getCell(11).setCellValue("未知情况");
-                }
-                Thread.sleep(100);
+        PreparedStatement pstmtUpdate =  conn1.prepareStatement("update xinmeiti_cuozi set 处理情况=? where id=?");
+
+        int cnt = 0;
+
+        for (String[] data : list) {
+            String ret = check(data[1], data[2]);
+            pstmtUpdate.setNString(1, ret);
+            pstmtUpdate.setInt(2, Integer.valueOf(data[0]));
+            pstmtUpdate.addBatch();
+            cnt++;
+            if (cnt >= 50) {
+                cnt = 0;
+                pstmtUpdate.executeBatch();
             }
         }
-        wb.write(new FileOutputStream(file.getParent() + "\\结果-" + file.getName()));
+        pstmtUpdate.executeBatch();
     }
 
     public String check(String keyword, String url) {
@@ -114,7 +109,26 @@ public class WebUIOP {
         }
     }
 
+    public void start() throws Exception {
+        System.setProperty("webdriver.chrome.driver", "c://driver//chromedriver.exe");
+        WebDriver webDriver = new ChromeDriver();
+        //System.setProperty("webdriver.gecko.driver", "c://geckodriver.exe");
+        //WebDriver webDriver = new FirefoxDriver();
+        webDriver.manage().window().maximize();
+        webDriver.manage().deleteAllCookies();
+        // 与浏览器同步非常重要，必须等待浏览器加载完毕
+        webDriver.manage().timeouts().implicitlyWait(10,
+                TimeUnit.SECONDS);
 
+        //打开目标地址
+        webDriver.get("https://baidu.com");
+        //System.out.println(webDriver.getPageSource());
+        webDriver.findElement(By.id("kw")).sendKeys("赣州");
+        webDriver.findElement(By.id("su")).click();
+        System.out.println(webDriver.findElement(By.id("kw")).getText());
+
+        Thread.sleep(4000);
+    }
 
     /***
      * 测试
